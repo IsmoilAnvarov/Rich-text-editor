@@ -9,6 +9,7 @@ import {
   toggleLinkAtSelection,
   toggleStyle,
 } from "../utils/EditorUtils";
+import TextColor from "./textColor";
 
 import { Button, ButtonGroup } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -62,6 +63,7 @@ export default function Toolbar({ selection, previousSelection }) {
           icon={<i className={`bi ${getIconForButton(style)}`} />}
         />
       ))}
+      <TextColor getActiveStyles={getActiveStyles} />
       {/* Link Button */}
       <ToolBarButton
         isActive={hasActiveLinkAtSelection(editor)}

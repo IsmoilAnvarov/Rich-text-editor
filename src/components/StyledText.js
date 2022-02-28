@@ -1,21 +1,42 @@
 import React from "react";
 
 export default function StyledText({ attributes, children, leaf }) {
+  const { color = "black" } = leaf;
   if (leaf.bold) {
-    children = <strong {...attributes}>{children}</strong>;
+    children = (
+      <strong style={{ color: color }} {...attributes}>
+        {children}
+      </strong>
+    );
   }
 
   if (leaf.code) {
-    children = <code {...attributes}>{children}</code>;
+    children = (
+      <code style={{ color: color }} {...attributes}>
+        {children}
+      </code>
+    );
   }
 
   if (leaf.italic) {
-    children = <em {...attributes}>{children}</em>;
+    children = (
+      <em style={{ color: color }} {...attributes}>
+        {children}
+      </em>
+    );
   }
 
   if (leaf.underline) {
-    children = <u {...attributes}>{children}</u>;
+    children = (
+      <u style={{ color: color }} {...attributes}>
+        {children}
+      </u>
+    );
   }
 
-  return <span {...attributes}>{children}</span>;
+  return (
+    <span style={{ color: color }} {...attributes}>
+      {children}
+    </span>
+  );
 }

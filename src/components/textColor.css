@@ -1,0 +1,32 @@
+.colors-container {
+  background: var(--ds-surface-overlay, #ffffff);
+  border-radius: 3px;
+  box-shadow: rgb(9 30 66 / 25%) 0px 4px 8px -2px,
+    rgb(9 30 66 / 31%) 0px 0px 1px;
+}
+
+.colors-container .row {
+  display: flex;
+}
+
+.colors-container .color {
+  border: 1px solid transparent;
+  margin: 1px;
+  font-size: 0px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  padding: 1px;
+  border-radius: 6px;
+}
+
+.colors-container .color button {
+  height: 26px;
+  width: 26px;
+  background: rgb(9, 30, 66);
+  padding: 0px;
+  border-radius: 4px;
+  border: 1px solid rgba(23, 43, 77, 0.12);
+  cursor: pointer;
+  display: block;
+}
