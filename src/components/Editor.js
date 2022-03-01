@@ -5,7 +5,7 @@ import {
   identifyLinksInTextIfAny,
   isLinkNodeAtSelection,
 } from "../utils/EditorUtils";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -17,10 +17,12 @@ import { createEditor } from "slate";
 import useEditorConfig from "../hooks/useEditorConfig";
 import useSelection from "../hooks/useSelection";
 import { withHistory } from "slate-history";
+import { Button } from "react-bootstrap";
 
 export default function Editor({ document, onChange }) {
   const editorRef = useRef(null);
   const editor = useMemo(() => withReact(withHistory(createEditor())), []);
+  const [expend, setExpend] = useState(true);
   const { renderLeaf, renderElement, KeyBindings } = useEditorConfig(editor);
 
   const onKeyDown = useCallback(
@@ -51,7 +53,11 @@ export default function Editor({ document, onChange }) {
 
   return (
     <Slate editor={editor} value={document} onChange={onChangeLocal}>
-      <Container className={"editor-container"}>
+      <div
+        className={`editor-container ${
+          expend ? "container" : "container-fluid"
+        }`}
+      >
         <Row>
           <Col>
             <Toolbar
@@ -60,6 +66,15 @@ export default function Editor({ document, onChange }) {
             />
           </Col>
         </Row>
+
+        <Col className="text-right">
+          <Button onClick={() => setExpend(!expend)}>
+            <i
+              class={`bi bi-arrows-angle-${expend ? "expand" : "contract"}`}
+            ></i>
+          </Button>
+        </Col>
+
         <Row>
           <Col>
             <div className="editor" ref={editorRef}>
@@ -84,7 +99,7 @@ export default function Editor({ document, onChange }) {
             </div>
           </Col>
         </Row>
-      </Container>
+      </div>
     </Slate>
   );
 }

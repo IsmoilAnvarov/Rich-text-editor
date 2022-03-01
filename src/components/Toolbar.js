@@ -38,7 +38,7 @@ export default function Toolbar({ selection, previousSelection }) {
 
   const onImageSelected = useImageUploadHandler(editor, previousSelection);
   const blockType = getTextBlockStyle(editor);
-  console.log(editor);
+
   return (
     <div className="toolbar">
       {/* Dropdown for paragraph styles */}
