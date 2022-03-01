@@ -7,7 +7,7 @@ export function getActiveStyles(editor) {
   return new Set(Object.keys(Editor.marks(editor) ?? {}));
 }
 
-export function getTextBlockStyle(editor) {
+const getTextBlock = function (editor) {
   const selection = editor.selection;
   if (selection == null) {
     return null;
@@ -19,25 +19,35 @@ export function getTextBlockStyle(editor) {
     match: (n) => Editor.isBlock(editor, n),
   });
 
-  let blockType = null;
+  let block = null;
   let nodeEntry = topLevelBlockNodesInSelection.next();
   while (!nodeEntry.done) {
     const [node] = nodeEntry.value;
-    if (blockType == null) {
-      blockType = node.type;
-    } else if (blockType !== node.type) {
-      return "multiple";
+    if (block == null) {
+      block = node;
+    } else if (block !== node.type) {
+      return { type: "multiple" };
     }
 
     nodeEntry = topLevelBlockNodesInSelection.next();
   }
+  return block;
+};
+
+export function getTextBlockStyle(editor) {
+  const blockType = getTextBlock(editor)?.type;
 
   return blockType !== "image" ? blockType : null;
 }
 
+export function getTextBlockAlign(editor) {
+  const blockAlignment = getTextBlock(editor)?.align || "left";
+
+  return blockAlignment;
+}
+
 export function toggleStyle(editor, style) {
   const activeStyles = getActiveStyles(editor);
-  console.log(editor, style, "toggle");
 
   if (activeStyles.has(style)) {
     Editor.removeMark(editor, style);

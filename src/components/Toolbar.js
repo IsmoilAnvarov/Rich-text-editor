@@ -1,6 +1,7 @@
 import "./Toolbar.css";
 
 import {
+  getTextBlockAlign,
   getActiveStyles,
   getTextBlockStyle,
   hasActiveLinkAtSelection,
@@ -36,9 +37,8 @@ export default function Toolbar({ selection, previousSelection }) {
   );
 
   const onImageSelected = useImageUploadHandler(editor, previousSelection);
-
   const blockType = getTextBlockStyle(editor);
-
+  console.log(editor);
   return (
     <div className="toolbar">
       {/* Dropdown for paragraph styles */}
@@ -100,26 +100,38 @@ export default function Toolbar({ selection, previousSelection }) {
       >
         <i class="bi bi-arrow-clockwise"></i>
       </Button>
-      <ButtonGroup className="me-2" aria-label="First group">
-        <Button
+
+      <Dropdown className={"d-inline"}>
+        <Dropdown.Toggle
           disabled={blockType == null || blockType === ""}
-          onClick={onBlockTypeChange.bind(this, undefined, "left")}
+          variant="primary"
+          id="dropdown-basic"
         >
-          <i class="bi bi-text-left"></i>
-        </Button>
-        <Button
-          disabled={blockType == null || blockType === ""}
-          onClick={onBlockTypeChange.bind(this, undefined, "center")}
-        >
-          <i class="bi bi-text-center"></i>
-        </Button>
-        <Button
-          disabled={blockType == null || blockType === ""}
-          onClick={onBlockTypeChange.bind(this, undefined, "right")}
-        >
-          <i class="bi bi-text-right"></i>
-        </Button>
-      </ButtonGroup>
+          <i className={`bi bi-text-${getTextBlockAlign(editor)}`}></i>
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu>
+          <Dropdown.Item
+            onClick={onBlockTypeChange.bind(this, undefined, "left")}
+            id="left"
+          >
+            {" "}
+            <i className="bi bi-text-left"></i>
+          </Dropdown.Item>
+          <Dropdown.Item
+            onClick={onBlockTypeChange.bind(this, undefined, "center")}
+            id="center"
+          >
+            <i className="bi bi-text-center"></i>
+          </Dropdown.Item>
+          <Dropdown.Item
+            onClick={onBlockTypeChange.bind(this, undefined, "right")}
+            id="right"
+          >
+            <i className="bi bi-text-right"></i>
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
     </div>
   );
 }

@@ -13,7 +13,6 @@ const colors = [
 
 const ColorsLayer = () => {
   const editor = useEditor();
-  console.log(editor);
   return (
     <div className="colors-container container">
       {colors.map((block, inx) => (

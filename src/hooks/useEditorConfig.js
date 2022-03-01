@@ -20,7 +20,6 @@ export default function useEditorConfig(editor) {
 
 function renderElement(props) {
   const { element, children, attributes } = props;
-  console.log({ element });
   switch (element.type) {
     case "image":
       return <Image {...props} />;
